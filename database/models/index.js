@@ -16,8 +16,9 @@ let db_uri = process.env.DB_URI
 
 // using cloud database locally
 // if(config.db_uri){
+// sequelize = new Sequelize(config.db_uri)
 if(db_uri){
-sequelize = new Sequelize(config.db_uri)
+sequelize = new Sequelize(db_uri)
 }else{
 sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
