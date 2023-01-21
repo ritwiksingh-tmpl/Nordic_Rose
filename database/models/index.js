@@ -9,9 +9,14 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(path.join(__dirname,'../config/config.js'))[env];
 const db = {};
 
-let sequelize;
 
-if(config.db_uri){
+let sequelize;
+// cloud database from online server
+let db_uri = env.process.DB_URI
+
+// using cloud database locally
+// if(config.db_uri){
+if(db_uri){
 sequelize = new Sequelize(config.db_uri)
 }else{
 sequelize = new Sequelize(config.database, config.username, config.password, config);
