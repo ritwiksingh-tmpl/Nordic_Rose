@@ -13,7 +13,7 @@ const development = {
   host: DB_HOST,
   port: Number(DB_PORT),
   ssl: SSL,
-  // logging: LOGGING,
+  logging: LOGGING,
   db_uri: DB_URI
 };
 
