@@ -12,7 +12,7 @@ const db = {};
 
 let sequelize;
 // cloud database from online server
-let db_uri = env.process.DB_URI
+let db_uri = process.env.DB_URI
 
 // using cloud database locally
 // if(config.db_uri){
