@@ -1,8 +1,14 @@
-const express = require('express');
-const author = express.Router();
+const express = require('express')
+const authorRoute = express.Router();
 const authorController = require('../controllers/author')
 
-author.get('/author/:id', authorController.getAuthor)
-author.post('/author', authorController.postAuthor)
+// all authors
+authorRoute.get('/', authorController.getAuthor)
 
-module.exports = author;
+// author by author id
+authorRoute.get('/:id', authorController.getAuthor)
+
+// add an author to the database
+authorRoute.post('/', authorController.editAuthor)
+
+module.exports = authorRoute;

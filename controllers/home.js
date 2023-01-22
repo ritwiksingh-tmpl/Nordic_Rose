@@ -7,7 +7,6 @@ module.exports = {
     getBanner: async (req, res) => {
         try {
             const banner = await db.HomePage.findAll();
-            console.log(banner)
             if (banner.length) {
                 return res.status(200).json(banner[0]);
             } else {

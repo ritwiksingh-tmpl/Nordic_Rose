@@ -6,6 +6,6 @@ module.exports = (app) => {
     console.log("this is a test");
     app.use('/', homeRoute)
     app.use('/home', homeRoute)
-    // app.use('/author', authorRoute)
+    app.use('/author', authorRoute)
     // app.use('/author/:id', authorRoute)
 }
