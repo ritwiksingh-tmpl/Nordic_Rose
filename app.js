@@ -1,13 +1,26 @@
 //prequisites
 require("dotenv").config();
+const cors = require("cors")
 const express = require('express');
 const db = require('./database/models');
 const config = require("./database/config/routes")
 const app = express();
 
 app.use(express.json())
+app.use(cors())
+app.use((res, req, next)=> {
+    res.header("Acess-Control-Allow-Origin", "*");
+    res.header("Acess-Control-Allow-Methods",
+    "GET, HEAD, OPTIONS, POST, PUT, DELETE"
+    );
+    res.header("Acess-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    );
+    next()
+})
 
 config(app)
+
 
 PORT = process.env.PORT || 8000
 

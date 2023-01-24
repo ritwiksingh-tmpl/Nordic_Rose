@@ -14,12 +14,13 @@ let sequelize;
 // cloud database from online server
 let db_uri = process.env.DB_URI
 
-// using cloud database locally
+// // using cloud database locally
 // if(config.db_uri){
 // sequelize = new Sequelize(config.db_uri)
 // console.log("cloud database is running...")
 // console.log("cloud database is running...")
-// console.log("cloud database is running...")
+console.log("cloud database is running...")
+// using cloud database on cloud
 if(db_uri){
 sequelize = new Sequelize(db_uri)
 }else{
