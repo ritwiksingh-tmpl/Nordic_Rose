@@ -3,6 +3,6 @@ const homeRoute = express.Router();
 const homeController = require('../controllers/home')
 
 homeRoute.get('/', homeController.getBanner)
-homeRoute.post('/', homeController.uploadBanner)
+// homeRoute.post('/', homeController.uploadBanner)
 
 module.exports = homeRoute;

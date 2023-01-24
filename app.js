@@ -7,6 +7,8 @@ const config = require("./database/config/routes")
 const app = express();
 
 app.use(express.json())
+
+// CORS SETUP
 app.use(cors())
 app.use((res, req, next)=> {
     res.header("Acess-Control-Allow-Origin", "*");
@@ -19,11 +21,12 @@ app.use((res, req, next)=> {
     next()
 })
 
+// Routes
 config(app)
-
 
 PORT = process.env.PORT || 8000
 
+// Server
 app.listen(PORT, async () => {
     try {
         await db.sequelize.authenticate();
