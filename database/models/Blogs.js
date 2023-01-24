@@ -10,19 +10,19 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         subtitle: {
-            type: DataTypes.STRING(100),
-            allowNull: false
-        },
-        subheading: {
-            type: DataTypes.STRING(20),
-            allowNull: false
-        },
-        shordDesc: {
             type: DataTypes.STRING(200),
             allowNull: false
         },
+        subheading: {
+            type: DataTypes.STRING(50),
+            allowNull: false
+        },
+        shordDesc: {
+            type: DataTypes.STRING(500),
+            allowNull: false
+        },
         description: {
-            type: DataTypes.STRING(400),
+            type: DataTypes.STRING(2048),
             allowNull: false
         },
         bannerImg: {
@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
         },
         contentImgDesc: {
-            type: DataTypes.STRING(50),
+            type: DataTypes.STRING(100),
         },
         AuthorId: {
             type: DataTypes.UUID,
@@ -49,9 +49,9 @@ module.exports = (sequelize, DataTypes) => {
       freezeTableName: true
     })
 
-    Blogs.associate = function({Authors}) {
-        this.belongsTo(Authors, {foreignKey: 'AuthorId'})
- };
+//     Blogs.associate = function({Authors}) {
+//         this.belongsTo(Authors, {foreignKey: 'AuthorId'})
+//  };
 
     return Blogs;
 }

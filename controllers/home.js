@@ -1,14 +1,12 @@
 const db = require('../database/models');
 
 module.exports = {
-    welcome: async (req, res) => {
-        return res.status(200).send("Hello World");
-    },
     getBanner: async (req, res) => {
         try {
             const banner = await db.HomePage.findAll();
+            const articles = await db.Blogs.findAll()
             if (banner.length) {
-                return res.status(200).json(banner[0]);
+                return res.status(200).json([banner[0], articles]);
             } else {
                 throw new Error("Article Not Found")
             }
