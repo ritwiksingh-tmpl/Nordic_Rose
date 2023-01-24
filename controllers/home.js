@@ -4,11 +4,30 @@ module.exports = {
     getBanner: async (req, res) => {
         try {
             const banner = await db.HomePage.findAll();
-            const articles = await db.Blogs.findAll()
+            let articles;
+            
+            if (req.query){
+                let perPage = parseInt(req.query.perPage) || 12
+                let pageNo = parseInt(req.query.pageNo) || 1
+                
+                let offset = (perPage * (pageNo - 1))
+                articles = await db.Blogs.findAll(
+                    {offset, limit: perPage})
+                }
+
+            else{
+                articles = await db.Blogs.findAll()
+            }
+            
+            const response = {
+                banner: banner[0],
+                blogs: articles
+            }
+
             if (banner.length) {
-                return res.status(200).json([banner[0], articles]);
+                return res.status(200).json(response);
             } else {
-                throw new Error("Article Not Found")
+                throw new Error("Articles Not Found")
             }
         } catch(err) {
             return res.status(404).send(`404 ${err}`);

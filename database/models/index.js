@@ -19,7 +19,7 @@ let db_uri = process.env.DB_URI
 // sequelize = new Sequelize(config.db_uri)
 // console.log("cloud database is running...")
 // console.log("cloud database is running...")
-console.log("cloud database is running...")
+// console.log("cloud database is running...")
 // using cloud database on cloud
 if(db_uri){
 sequelize = new Sequelize(db_uri)
