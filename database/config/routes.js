@@ -6,4 +6,5 @@ module.exports = (app) => {
     console.log("this is a test");
     app.use('/', welcome)
     app.use('/home', homeRoute)
+    app.use('/article', articleRoute)
 }

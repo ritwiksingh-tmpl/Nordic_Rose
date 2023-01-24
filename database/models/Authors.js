@@ -32,8 +32,8 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'Authors',
         freezeTableName: true,
     })
-    // Authors.associate = function(models) {
-    //     // associations can be defined here
+    // Authors.associate = function({Blogs}) {
+    //     this.hasMany(Blogs, {foreignKey: 'AuthorId'})
     // };
     return Authors;
 };
