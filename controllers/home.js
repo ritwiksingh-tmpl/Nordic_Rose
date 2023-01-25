@@ -3,7 +3,7 @@ const db = require('../database/models');
 module.exports = {
     getBlogs: async (req, res) => {
         try {
-            const banner = await db.HomePage.findAll();
+            const banner = await db.HomePage.findAll({attributes : ["id", "title", "subtitle", "bannerImg"]});
             
             // pagination
             let perPage = parseInt(req.query.perPage) || 12
@@ -11,7 +11,7 @@ module.exports = {
             
             let offset = (perPage * (pageNo - 1))
             let articles = await db.Blogs.findAll(
-                {offset, limit: perPage}
+                {offset, limit: perPage, attributes : ["id", "title", "bannerImg"]}
                 )
             
                 //total pages

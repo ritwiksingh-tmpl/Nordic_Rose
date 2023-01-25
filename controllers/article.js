@@ -6,6 +6,8 @@ module.exports = {
         try {
             let id = req.params.id
 
+            console.log(`Searching for article ${id} .`);
+            console.log(`Searching for article ${id} ..`);
             console.log(`Searching for article ${id} ...`);
 
             // pagination
@@ -14,7 +16,7 @@ module.exports = {
             
             let offset = (perPage * (pageNo - 1))
             articles = await db.Blogs.findAll(
-                {offset, limit: perPage}
+                {offset, limit: perPage, attributes : ["id", "title", "bannerImg"]}
                 )
 
             //total pages
@@ -32,11 +34,15 @@ module.exports = {
             // )
 
             const article = await db.Blogs.findOne(
-                {where: {id}}
+                {where: {id}, attributes: {exclude: ["updatedAt"]}}
             )
 
-            const author = await db.Authors.findOne(
-                {where: {id: article.AuthorId}}
+            const author = await db.Authors.findOne({
+                where: {
+                    id: article.AuthorId}, 
+                attributes: {
+                    exclude: ["updatedAt", "createdAt"]}
+                }
             )
             
             // LOL manual association
