@@ -8,6 +8,7 @@ module.exports = {
 
             console.log(`Searching for article ${id} ...`);
 
+            // pagination
             let perPage = parseInt(req.query.perPage) || 6
             let pageNo = parseInt(req.query.pageNo) || 1
             
@@ -15,6 +16,15 @@ module.exports = {
             articles = await db.Blogs.findAll(
                 {offset, limit: perPage}
                 )
+
+            //total pages
+            let totalPosts = await db.Blogs.findAll();
+            totalPosts = totalPosts.length
+            let totalPages = []
+            console.log(totalPosts);
+            for (let i = 1; i <= Math.ceil(totalPosts / perPage); i++) {
+                totalPages.push(i);
+              }
 
             // association
             // const article = await db.Blogs.findOne(
@@ -34,7 +44,8 @@ module.exports = {
             
             const response = {
                     article: article,
-                    readNext: articles
+                    readNext: articles,
+                    totalPages: totalPages
             }
             return res.status(200).json(response)
 
