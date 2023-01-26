@@ -11,7 +11,7 @@ module.exports = {
 
             const keyword = req.query.keyword;
             const results = await db.Blogs.findAll({
-                where: {tags: {[Op.iLike]: `%${keyword}%`}},
+                where: {[Op.or] : {tags: {[Op.iLike]: `%${keyword}%`}, title: {[Op.iLike] : `%${keyword}%`}}},
                 attributes: ["id", "title"]
             })
 
