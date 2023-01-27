@@ -6,23 +6,23 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true
         },
         title: {
-            type: DataTypes.STRING(80),
+            type: DataTypes.STRING,
             allowNull: false
         },
         subtitle: {
-            type: DataTypes.STRING(200),
+            type: DataTypes.STRING,
             allowNull: false
         },
         subheading: {
-            type: DataTypes.STRING(50),
+            type: DataTypes.STRING,
             allowNull: false
         },
-        shordDesc: {
-            type: DataTypes.STRING(500),
+        shortDesc: {
+            type: DataTypes.TEXT,
             allowNull: false
         },
         description: {
-            type: DataTypes.STRING(2048),
+            type: DataTypes.TEXT,
             allowNull: false
         },
         bannerImg: {
@@ -33,14 +33,14 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
         },
         contentImgDesc: {
-            type: DataTypes.STRING(100),
+            type: DataTypes.STRING,
         },
-        AuthorId: {
+        Author: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4
         },
         tags: {
-            type: DataTypes.STRING(20),
+            type: DataTypes.STRING,
             allowNull: false
         }
 

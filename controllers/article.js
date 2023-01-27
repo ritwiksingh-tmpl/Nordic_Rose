@@ -36,17 +36,19 @@ module.exports = {
             const article = await db.Blogs.findOne(
                 {where: {id}, attributes: {exclude: ["updatedAt"]}}
             )
-
+            
+            // finding author of 
             const author = await db.Authors.findOne({
                 where: {
-                    id: article.AuthorId}, 
+                    id: article.Author}, 
                 attributes: {
-                    exclude: ["updatedAt", "createdAt"]}
+                    exclude: ["id","updatedAt", "createdAt"]}
                 }
             )
             
             // LOL manual association
-            article.AuthorId = author
+            article.Author = author
+            console.log(author)
             
             const response = {
                     article: article,
@@ -57,7 +59,7 @@ module.exports = {
 
         } catch (err) {
             const response = {
-                article: `Error: Blog with id '${req.params.id}' doesn't exist!`,
+                error: `Bad Reqest: ${err.message}`,
                 readNext: articles
             }
             return res.status(400).json(response)

@@ -6,11 +6,11 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,  
         },
         title: {
-            type: DataTypes.STRING(80),
+            type: DataTypes.STRING,
             allowNull: false,
         }, 
         subtitle: {
-            type: DataTypes.STRING(100),
+            type: DataTypes.STRING,
             allowNull: false,
         },
         bannerImg: {

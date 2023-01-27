@@ -14,7 +14,7 @@ module.exports = {
                 {offset, limit: perPage, attributes : ["id", "title", "bannerImg"]}
                 )
             
-                //total pages
+            //total pages
             let totalPosts = await db.Blogs.findAll();
             totalPosts = totalPosts.length
             let totalPages = []
@@ -22,7 +22,8 @@ module.exports = {
             for (let i = 1; i <= Math.ceil(totalPosts / perPage); i++) {
                 totalPages.push(i);
               }
-
+            
+            // response object
             const response = {
                 banner: banner[0],
                 blogs: articles,
