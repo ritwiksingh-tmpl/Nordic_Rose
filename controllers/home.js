@@ -1,48 +1,92 @@
-const db = require('../database/models');
+////don't call same article on readnext --> (handled sucessfully)
+
+const db = require("../database/models");
+const { Op } = require("sequelize");
+const { sequelize } = require("../database/models");
 
 module.exports = {
-    getBlogs: async (req, res) => {
-        try {
-            const banner = await db.HomePage.findAll({attributes : ["id", "title", "subtitle", "bannerImg"]});
-            
-            // pagination
-            let perPage = parseInt(req.query.perPage) || 12
-            let pageNo = parseInt(req.query.pageNo) || 1
-            
-            let offset = (perPage * (pageNo - 1))
-            let articles = await db.Blogs.findAll(
-                {offset, limit: perPage, attributes : ["id", "title", "bannerImg"]}
-                )
-            
-            //total pages
-            let totalPosts = await db.Blogs.findAll();
-            totalPosts = totalPosts.length
-            let totalPages = []
-            console.log(totalPosts);
-            for (let i = 1; i <= Math.ceil(totalPosts / perPage); i++) {
-                totalPages.push(i);
-              }
-            
-            // response object
-            const response = {
-                banner: banner[0],
-                blogs: articles,
-                totalPages: totalPages
-            }
-            
-            return res.status(200).json(response);
+  getBlogs: async (req, res) => {
+    try {
+      // pagination
+      let perPage = parseInt(req.query.perPage) || 6;
+      let pageNo = parseInt(req.query.pageNo) || 1;
 
-        } catch(err) {
-            return res.status(404).send(`404 ${err}`);
+      //total pages
+      let totalPosts = await db.Blogs.findAll();
+      totalPosts = totalPosts.length - 1;
+      let totalPages = [];
+
+      // Math.ceil() adds the fraction value to the next integer value
+      for (let i = 1; i <= Math.ceil(totalPosts / perPage); i++) {
+        totalPages.push(i);
+      }
+
+      // if requested pageNo > totalPages
+      if (pageNo > totalPages.length) {
+        pageNo = totalPages.length;
+      }
+
+      // offest
+      let offset = perPage * (pageNo - 1);
+
+      const currentBanner = req.body.currentBanner;
+      console.log(currentBanner);
+
+      // if requested page is > 1 i.e next page called
+      if (parseInt(pageNo) > 1) {
+        if (currentBanner && currentBanner !== ""){
+          let articles = await db.Blogs.findAll({
+            offset,
+            limit: perPage,
+            where: {id: {[Op.ne]: currentBanner}},
+            attributes: ["id", "title", "bannerImg"],
+          });
+
+          let response = {articles, totalPages};
+          return res.status(200).json(response);
+
+        } else {
+          throw new Error("currentBanner either not provided or invalid uuid!");
         }
-    },
-    uploadBanner: async(req, res) => {
-        const {title, subtitle, bannerImg} = req.body;
-        try {
-            const homePage = await db.HomePage.create({ title, subtitle, bannerImg});
-            return res.status(200).json({homePage});
-        } catch(err) {
-            return res.status(400).json({error: `Bad Request: ${err.message}`});
-        }
+      } else {
+
+        // banner article
+        const banner = await db.Blogs.findOne({
+          order: sequelize.random(),
+          attributes: ["id", "title", "subtitle", "bannerImg"],
+        });
+
+        // readnext articles
+        let articles = await db.Blogs.findAll({
+          offset, limit: perPage,
+          where: { id: { [Op.ne]: banner.id } },
+          attributes: ["id", "title", "bannerImg"],
+        });
+
+        let response = {banner, blogs: articles, totalPages};
+        return res.status(200).json(response);
+      }
+    } catch (err) {
+      return res.status(400).send(`${err}`);
     }
-}
+  },
+};
+
+/*
+LET response = {emptyObject}
+
+IF pageNo > 1:
+    response = {
+        articles,
+        totalPages
+    }
+    return response
+
+ELSE:
+    response = {
+        banner,
+        articles,
+        totalPages
+    }
+    return response
+*/
