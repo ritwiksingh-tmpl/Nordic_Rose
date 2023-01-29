@@ -27,7 +27,6 @@ module.exports = {
       let totalPosts = await db.Blogs.findAll();
       totalPosts = totalPosts.length - 1;
       let totalPages = [];
-
       // Math.ceil() adds the fraction value to the next integer value
       for (let i = 1; i <= Math.ceil(totalPosts / perPage); i++) {
         totalPages.push(i);
@@ -37,9 +36,11 @@ module.exports = {
       if (pageNo > totalPages.length) {
         pageNo = totalPages.length;
       }
+
       // offset
       let offset = perPage * (pageNo - 1);
-
+      
+      //
       readNext = await db.Blogs.findAll({
         offset,
         limit: perPage,
@@ -54,6 +55,11 @@ module.exports = {
       };
       return res.status(200).json(response);
     } catch (err) {
+      readNext = await db.Blogs.findAll({
+        offset,
+        limit: perPage,
+        attributes: ["id", "title", "bannerImg"]});
+
       const response = {
         error: `Bad Reqest: ${err.message}`,
         readNext
