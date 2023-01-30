@@ -7,6 +7,7 @@ const { sequelize } = require("../database/models");
 module.exports = {
   getBlogs: async (req, res) => {
     try {
+      console.log(req.body);
       // pagination
       let perPage = parseInt(req.query.perPage) || 6;
       let pageNo = parseInt(req.query.pageNo) || 1;
