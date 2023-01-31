@@ -36,14 +36,14 @@ module.exports = {
       // if requested page is > 1 i.e next page called
       if (parseInt(pageNo) > 1) {
         if (currentBanner && currentBanner !== ""){
-          let articles = await db.Blogs.findAll({
+          let blogs = await db.Blogs.findAll({
             offset,
             limit: perPage,
             where: {id: {[Op.ne]: currentBanner}},
             attributes: ["id", "title", "bannerImg"],
           });
 
-          let response = {articles, totalPages};
+          let response = {blogs, totalPages};
           return res.status(200).json(response);
 
         } else {
