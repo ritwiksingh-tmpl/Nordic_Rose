@@ -11,6 +11,7 @@ module.exports = {
       // pagination
       let perPage = parseInt(req.query.perPage) || 6;
       let pageNo = parseInt(req.query.pageNo) || 1;
+      let currentBanner = req.query.currentBanner
 
       //total pages
       let totalPosts = await db.Blogs.findAll();
@@ -30,7 +31,6 @@ module.exports = {
       // offest
       let offset = perPage * (pageNo - 1);
 
-      const currentBanner = req.body.currentBanner;
       console.log(currentBanner);
 
       // if requested page is > 1 i.e next page called
