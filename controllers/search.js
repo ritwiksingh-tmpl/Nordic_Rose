@@ -16,7 +16,7 @@ module.exports = {
             })
 
             if (results.length === 0) {
-                return res.status(404).json({message: 'No match found!'})
+                return res.status(404).json({title: 'No match found!'})
             }
             res.status(200).json(results);
 
