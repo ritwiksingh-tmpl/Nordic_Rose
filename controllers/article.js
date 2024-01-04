@@ -35,6 +35,11 @@ module.exports = {
             as: "Author",
             attributes: { exclude: ["id", "createdAt", "updatedAt"] },
           },
+          {
+            model: db.Tags,
+            attributes: ["id", "title"],
+            through: { attributes: [] }, // exclude junction table attributes
+          },
         ],
       });
 

@@ -37,10 +37,6 @@ module.exports = (sequelize, DataTypes) => {
       contentImgDesc: {
         type: DataTypes.STRING,
       },
-      tags: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
     },
     {
       tableName: "Blogs",
@@ -50,6 +46,10 @@ module.exports = (sequelize, DataTypes) => {
 
   Blogs.associate = function (models) {
     models.Blogs.belongsTo(models.Authors, { foreignKey: "AuthorId" });
+    Blogs.belongsToMany(models.Tags, {
+      through: "BlogTags", // junction table
+      foreignKey: "BlogId",
+    });
   };
 
   return Blogs;
