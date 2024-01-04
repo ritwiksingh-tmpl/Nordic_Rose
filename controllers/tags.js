@@ -3,7 +3,7 @@ const db = require("../database/models");
 module.exports = {
   getAllTags: async (req, res) => {
     try {
-      const response = await db.Tags.findAll();
+      const response = await db.Tags.findAll({ attributes: ["id", "title"] });
       return res.status(200).json(response);
     } catch (error) {
       res.status(400).send(`Bad Request ${err}`);
